@@ -41,6 +41,8 @@ function cleaner(event) {
 
   event.preventDefault();
 
+  localStorage.removeItem(expressionKey)
+
   email.value = '';
   message.value = '';
 }

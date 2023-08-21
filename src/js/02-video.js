@@ -6,23 +6,15 @@ const vimeo = new Player(player);
 
 const expressionKey = 'videoplayer-current-time';
 
-function saveTimeValueToLocalStorage(time) {
-  localStorage.setItem(expressionKey, JSON.stringify(time));
-}
+const saveTimeValueToLocalStorage = 
+  throttle((time) => localStorage.setItem(expressionKey, JSON.stringify(time)), 1000);
 
-function getTimeValueFromLocalStorage() {
-  let localTime = localStorage.getItem(expressionKey);
-  if (localTime !== null) {
-    return JSON.parse(localTime);
-  }
-  return 0;
-}
 
-// vimeo.setCurrentTime(getTimeValueFromLocalStorage).then(() =>
-//     vimeo.on('timeupdate', throttle((
-//     seconds
-//   ) => saveTimeValueToLocalStorage(seconds), 1000))
+vimeo.on('timeupdate', (data) => {
+  const currentTime = data.seconds;
+  saveTimeValueToLocalStorage(currentTime);
+});
 
-// )
+const savedTime = localStorage.getItem(expressionKey);
 
-vimeo.setCurrentTime(getTimeValueFromLocalStorage() || 0)
+vimeo.setCurrentTime(savedTime || 0);

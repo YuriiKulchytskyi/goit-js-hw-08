@@ -32,17 +32,24 @@ message.addEventListener('input', throttle(saveDataToLocalStorage, 500));
 
 form.addEventListener('submit', cleaner)
 
+
 function cleaner(event) {
-  const formData = {
-    email: email.value,
-    message: message.value
+  if (email.value === '' || message.value === '') {
+    return alert('Please fill in all the fields!')
+
+  } else {
+    const formData = {
+      email: email.value,
+      message: message.value
+    }
+    console.log(formData);
+
+    event.preventDefault();
+
+    localStorage.removeItem(expressionKey)
+
+    email.value = '';
+    message.value = '';
   }
-  console.log(formData);
 
-  event.preventDefault();
-
-  localStorage.removeItem(expressionKey)
-
-  email.value = '';
-  message.value = '';
 }

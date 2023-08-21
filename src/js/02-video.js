@@ -18,9 +18,11 @@ function getTimeValueFromLocalStorage() {
   return 0;
 }
 
-vimeo.setCurrentTime(getTimeValueFromLocalStorage).then(() =>
-    vimeo.on('timeupdate', throttle((
-    seconds
-  ) => saveTimeValueToLocalStorage(seconds), 1000))
+// vimeo.setCurrentTime(getTimeValueFromLocalStorage).then(() =>
+//     vimeo.on('timeupdate', throttle((
+//     seconds
+//   ) => saveTimeValueToLocalStorage(seconds), 1000))
 
-)
+// )
+
+vimeo.setCurrentTime(getTimeValueFromLocalStorage() || 0)
